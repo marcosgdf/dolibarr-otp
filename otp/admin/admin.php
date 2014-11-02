@@ -50,8 +50,8 @@ print '<div class="titre">Utilización y configuración del módulo</div>';
 
 print '
 
-<p>Todos los usuarios de Dolibarr deberán disponer de un dispositivo Android o iPhone capaz de generar
-códigos HOTP a partir de una clave proporcionada por Dolibarr. Puede descargar la aplicación Google Authenticator para <a href="https://itunes.apple.com/us/app/google-authenticator/id388497605?mt=8">iPhone</a>® y <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=es">Android™</a>.</p>
+<p>Todos los usuarios de Dolibarr deberán disponer de un dispositivo Android, iPhone o Blackberry capaz de generar
+códigos HOTP a partir de una clave proporcionada por Dolibarr. Puede descargar la aplicación Google Authenticator para <a href="https://itunes.apple.com/us/app/google-authenticator/id388497605?mt=8">iPhone</a>®, <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=es">Android™</a> o <a href="https://support.google.com/accounts/answer/1066447?hl=es">Blackberry®</a>.</p>
 
 <p>Una vez preparado para configurar su clave, todos los usuarios de Dolibarr deberán acceder a su ficha de usuario y hacer click sobre el botón "Regenerar clave OTP". En ese momento se mostrará un código QR de un solo uso para configurar en su dispositivo móvil.</p>
 
@@ -59,7 +59,7 @@ códigos HOTP a partir de una clave proporcionada por Dolibarr. Puede descargar 
 
 <p><i style="font-family:monospace;font-weight:bold">$dolibarr_main_authentication=\'dolibarr\';</i> por <i style="font-family:monospace;font-weight:bold">$dolibarr_main_authentication=\'otp\';</i></p>
 
-<p>A partir de ese momento deberá introducir la clave OTP generada por su dispositivo móvil junto con su usuario y contraseña.</p>
+<p>A partir de ese momento deberá introducir la clave OTP generada por su dispositivo móvil junto con su usuario y contraseña.<br>Si algún usuario no hubiera configurado su clave OTP todavía, podrá iniciar sesión sin tener que rellenarla.</p>
 
 <p style="text-align: center;border: 1px solid red;line-height:20px">IMPORTANTE: En caso de que el dispositivo se desincronizara con Dolibarr (es decir, que se hayan solicitado más claves de las que se han usado y Dolibarr ya no le autoriza la entrada), deberá realizar el proceso inverso: acceder al archivo htdocs/conf/conf.php y cambiar la línea:<br>
 

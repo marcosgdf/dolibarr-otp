@@ -87,7 +87,7 @@ class ActionsOtp
 					$qrCode->save(__DIR__.'/../tmp/'.$user->id.'.png');
 
 					print '<img src="/otp/showdoc.php?img='.$user->id.'"><br>¿Problemas leyendo el código QR? Introduzca el siguiente HASH en su móvil:<br />
-				<span style="font-family:monospace;font-size:20px">'.$base32Seed.'</span>';
+				<span style="font-family:monospace;font-size:20px">'.$base32Seed.'</span><br>Tipo de clave: basada en contador.';
 
 				}
 
