@@ -72,7 +72,7 @@ class ActionsOtp
 					# codificar el texto cifrado resultante para que pueda ser representado por un string
 					$ciphertext_base64 = base64_encode($ciphertext);
 
-					$sql = "UPDATE llx_user SET otp_seed = '".$db->escape(
+					$sql = "UPDATE ".MAIN_DB_PREFIX."user SET otp_seed = '".$db->escape(
 							$ciphertext_base64
 						)."', otp_counter = 0 WHERE rowid = ".$user->id;
 					$db->query($sql);

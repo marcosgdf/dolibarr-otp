@@ -82,7 +82,7 @@ function check_user_password_otp($usertotest,$passwordtotest,$entitytotest)
 
 				$obj->otp_counter++;
 
-				$sql = "UPDATE llx_user SET otp_counter = '".$obj->otp_counter."' WHERE rowid = ".$obj->rowid;
+				$sql = "UPDATE ".MAIN_DB_PREFIX."user SET otp_counter = '".$obj->otp_counter."' WHERE rowid = ".$obj->rowid;
 				$db->query($sql);
 
 				// Now the user is authenticated
