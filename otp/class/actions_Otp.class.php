@@ -27,22 +27,28 @@ class ActionsOtp
 
 	public function getLoginPageOptions($parameters, &$object, &$action, HookManager $hookManager)
 	{
+		global $langs;
+
+		$langs->load('otp@otp');
+
 		$this->results = array(
 			'options' => array(
 				'table' => '<tr>
 <td>
-<label for="otp"><strong>Código OTP</strong></label></td><td><input type="text" name="otp" class="flat" size="15" id="otp" tabindex="3"></td></tr>'
+<label for="otp"><strong>'.$langs->trans('OTPCode').'</strong></label></td><td><input type="text" name="otp" class="flat" size="15" id="otp" tabindex="3"></td></tr>'
 			)
 		);
 	}
 
 	public function formObjectOptions($parameters, &$object, &$action, HookManager $hookManager)
 	{
-		global $db, $user, $mysoc, $dolibarr_main_cookie_cryptkey;
+		global $db, $user, $langs, $mysoc, $dolibarr_main_cookie_cryptkey;
+
+		$langs->load('otp@otp');
 
 		if ($action == '') {
 
-			print '<tr><td>Login OTP</td><td colspan="2">';
+			print '<tr><td>'.$langs->trans('OTPLogin').'</td><td colspan="2">';
 
 			if (GETPOST('regenerate_otp')) {
 
@@ -86,8 +92,8 @@ class ActionsOtp
 
 					$qrCode->save(__DIR__.'/../tmp/'.$user->id.'.png');
 
-					print '<img src="/otp/showdoc.php?img='.$user->id.'"><br>¿Problemas leyendo el código QR? Introduzca el siguiente HASH en su móvil:<br />
-				<span style="font-family:monospace;font-size:20px">'.$base32Seed.'</span><br>Tipo de clave: basada en contador.';
+					print '<img src="/otp/showdoc.php?img='.$user->id.'"><br>'.$langs->trans('OTPTroubleHash').'<br />
+				<span style="font-family:monospace;font-size:20px">'.$base32Seed.'</span><br>'.$langs->trans('OTPKeyType');
 
 				}
 
@@ -99,7 +105,7 @@ class ActionsOtp
 
 					<form method="post">
 
-						<input type="submit" value="Regenerar clave OTP" class="button" name="regenerate_otp">
+						<input type="submit" value="'.$langs->trans('OTPRegenerate').'" class="button" name="regenerate_otp">
 				</form>';
 				}
 			}

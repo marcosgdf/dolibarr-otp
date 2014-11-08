@@ -59,8 +59,6 @@ class modOtp extends DolibarrModules
 	 */
 	function __construct($db)
 	{
-		global $langs,$conf;
-
 		$this->db = $db;
 
 		// Id for module (must be unique).
@@ -73,7 +71,7 @@ class modOtp extends DolibarrModules
 		// It is used to group modules in module setup page
 		$this->family = "technic";
 		// Module label (no space allowed), used if translation string 'ModuleXXXName' not found (where XXX is value of numeric property 'numero' of module)
-		$this->name = 'OTP';
+		$this->name = 'OTP login';
 		// Module description, used if translation string 'ModuleXXXDesc' not found (where XXX is value of numeric property 'numero' of module)
 		$this->description = "HOTP login for Dolibarr";
 		// Possible values for version are: 'development', 'experimental', 'dolibarr' or version
@@ -109,7 +107,9 @@ class modOtp extends DolibarrModules
 		$this->conflictwith = array();	// List of modules id this module is in conflict with
 		$this->phpmin = array(5,0);					// Minimum version of PHP required by module
 		$this->need_dolibarr_version = array(3,0);	// Minimum version of Dolibarr required by module
-		$this->langfiles = array("mylangfile@mymodule");
+		$this->langfiles = array(
+			"otp@otp"
+		);
 
 	}
 
