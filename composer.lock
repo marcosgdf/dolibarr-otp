@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "4584431052015cd11125972cb0bbeff4",
+    "hash": "f78965659df66b23627f4a4241463f56",
     "packages": [
         {
             "name": "endroid/qrcode",
