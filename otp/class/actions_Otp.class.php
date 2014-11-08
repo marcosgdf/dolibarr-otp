@@ -96,7 +96,7 @@ class ActionsOtp
 
 					$qrCode->save(__DIR__.'/../tmp/'.$user->id.'.png');
 
-					print '<img src="/otp/showdoc.php?img='.$user->id.'"><br>'.$langs->trans('OTPTroubleHash').'<br />
+					print '<img src="'.dol_buildpath('otp/showdoc.php', 1).'?img='.$user->id.'"><br>'.$langs->trans('OTPTroubleHash').'<br />
 				<span style="font-family:monospace;font-size:20px">'.$base32Seed.'</span><br>'.$langs->trans('OTPKeyType');
 
 				}
