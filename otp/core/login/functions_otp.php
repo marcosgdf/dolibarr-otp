@@ -39,13 +39,6 @@ function check_user_password_otp($usertotest,$passwordtotest,$entitytotest)
 		return '';
 	}
 
-	//Now we validate OTP
-	$providedOTP = GETPOST('otp');
-
-	if (empty($providedOTP)) {
-		return '';
-	}
-
 	// Force master entity in transversal mode
 	$entity=$entitytotest;
 	if (! empty($conf->multicompany->enabled) && ! empty($conf->multicompany->transverse_mode)) $entity=1;
@@ -64,8 +57,15 @@ function check_user_password_otp($usertotest,$passwordtotest,$entitytotest)
 		if ($obj) {
 
 			//The user has not configured an OTP key
-			if (!$obj->otp_seed && !$obj->otp_counter) {
+			if (!$obj->otp_seed) {
 				return $usertotest;
+			}
+
+			//Now we validate OTP
+			$providedOTP = GETPOST('otp');
+
+			if (empty($providedOTP)) {
+				return '';
 			}
 
 			$ciphertext_dec = base64_decode($obj->otp_seed);
