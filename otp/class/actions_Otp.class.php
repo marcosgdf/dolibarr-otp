@@ -54,6 +54,10 @@ class ActionsOtp
 
 				if ($user->admin || ($user->id == GETPOST('id', 'int'))) {
 
+					/**
+					 * Examples from http://es.php.net/mcrypt_encrypt
+					 */
+
 					// Generates a 20-byte (160-bit) secret key
 					$otpSeed = Seed::generate();
 					$base32Seed = $otpSeed->getValue(Seed::FORMAT_BASE32);

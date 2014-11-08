@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
- * With derivated work of Dolibarr project (www.dolibarr.org) under the following license:
+ * With derived work of Dolibarr project (www.dolibarr.org) under the following license:
  *
  * Copyright (C) 2003      Rodolphe Quiedeville <rodolphe@quiedeville.org>
  * Copyright (C) 2004-2012 Laurent Destailleur  <eldy@users.sourceforge.net>
