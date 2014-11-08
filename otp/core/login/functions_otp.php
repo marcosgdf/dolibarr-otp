@@ -68,6 +68,10 @@ function check_user_password_otp($usertotest,$passwordtotest,$entitytotest)
 				return '';
 			}
 
+			/**
+			 * Examples from http://es.php.net/mcrypt_encrypt
+			 */
+
 			$ciphertext_dec = base64_decode($obj->otp_seed);
 			$key = pack('H*', $dolibarr_main_cookie_cryptkey);
 
