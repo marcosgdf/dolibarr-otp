@@ -59,8 +59,14 @@ function check_user_password_otp($usertotest,$passwordtotest,$entitytotest)
 	$resql=$db->query($sql);
 
 	if ($resql) {
+
 		$obj = $db->fetch_object($resql);
 		if ($obj) {
+
+			//The user has not configured an OTP key
+			if (!$obj->otp_seed && !$obj->otp_counter) {
+				return $usertotest;
+			}
 
 			$ciphertext_dec = base64_decode($obj->otp_seed);
 			$key = pack('H*', $dolibarr_main_cookie_cryptkey);
