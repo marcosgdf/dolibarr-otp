@@ -18,3 +18,4 @@ OTPAdminInfoOverride=Los administradores tienen el poder de regenerar la clave O
 OTPAdminAuthor = Autor
 OTPAdminAuthorBody=Módulo desarrollado por Marcos García de La Fuente (%s) utilizando las siguientes librerías:
 OTPAdminSupport=En caso de cualquier problema, envíe un email a %s
+OTPGift=Si le ha gustado este módulo, puede que desee recompensar mi trabajo enviándome una tarjeta regalo de Amazon.es a %s :)

@@ -96,5 +96,8 @@ print '
 <li>Rych Random Data Library: <a href="https://github.com/rchouinard/rych-random">https://github.com/rchouinard/rych-random</a></li>
 </ul>
 <p>'.sprintf($otplangs->trans('OTPAdminSupport'), '<a href="mailto:hola@marcosgdf.com">hola@marcosgdf.com</a>').'.</p>
+
+<p>'.sprintf($otplangs->trans('OTPGift'), 'hola@marcosgdf.com').'</p>
+<p style="text-align:center"><a href="https://www.amazon.es/gp/product/B005Z3AHTQ/gcrnsts"><img src="../img/buy.gif"></a></p>
 ';
 
