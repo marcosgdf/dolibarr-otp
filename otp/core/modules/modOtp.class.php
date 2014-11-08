@@ -106,7 +106,7 @@ class modOtp extends DolibarrModules
 		$this->requiredby = array();	// List of modules id to disable if this one is disabled
 		$this->conflictwith = array();	// List of modules id this module is in conflict with
 		$this->phpmin = array(5,0);					// Minimum version of PHP required by module
-		$this->need_dolibarr_version = array(3,4);	// Minimum version of Dolibarr required by module
+		$this->need_dolibarr_version = array(3,3);	// Minimum version of Dolibarr required by module
 		$this->langfiles = array(
 			"otp@otp"
 		);

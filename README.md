@@ -8,4 +8,10 @@ Just copy the folder otp to your htdocs folder or your custom folder (if you hav
 
 ### Minimum requirements
 * Mcrypt extension
-* Dolibarr 3.5.4
+* Dolibarr 3.3
+
+### Tested Dolibarr versions
+* 3.6
+* 3.5
+* 3.4
+* 3.3
