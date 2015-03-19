@@ -1,22 +1,23 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
     ],
-    "hash": "f78965659df66b23627f4a4241463f56",
+    "hash": "81cdf5b7bc493bb89ec4200153a167a8",
     "packages": [
         {
             "name": "endroid/qrcode",
-            "version": "1.3.4",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/endroid/QrCode.git",
-                "reference": "2f16a33eda047e6116f57ebe9cc7dbf6ec316396"
+                "reference": "d178018a109f46a7caf86ce76c8de6902cb57a82"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/endroid/QrCode/zipball/2f16a33eda047e6116f57ebe9cc7dbf6ec316396",
-                "reference": "2f16a33eda047e6116f57ebe9cc7dbf6ec316396",
+                "url": "https://api.github.com/repos/endroid/QrCode/zipball/d178018a109f46a7caf86ce76c8de6902cb57a82",
+                "reference": "d178018a109f46a7caf86ce76c8de6902cb57a82",
                 "shasum": ""
             },
             "require": {
@@ -53,7 +54,7 @@
                 "qr",
                 "qrcode"
             ],
-            "time": "2014-08-06 21:30:48"
+            "time": "2015-01-25 22:41:34"
         },
         {
             "name": "rych/otp",
@@ -171,6 +172,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
     "platform": [],
     "platform-dev": []
 }
