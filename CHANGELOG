@@ -1,0 +1,6 @@
+v1.0.1
+========================
+- Fixed a problem where the module didn't load when requirements were not met
+- Fixed a problem that OTP module didn't show up in any user's card
+- Updated external libraries
+- Better error reporting

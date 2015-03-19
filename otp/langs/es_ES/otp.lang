@@ -1,3 +1,4 @@
+McryptNotAvailable=La extensión requerida MCrypt no está disponible en este servidor
 Module402000Name=Inicio de sesión OTP
 Module402000Desc=Inicio de sesión con claves HOTP en Dolibarr
 OTPLogin=Inicio de sesión OTP
@@ -19,3 +20,4 @@ OTPAdminAuthor = Autor
 OTPAdminAuthorBody=Módulo desarrollado por Marcos García de La Fuente (%s) utilizando las siguientes librerías:
 OTPAdminSupport=En caso de cualquier problema, envíe un email a %s
 OTPGift=Si le ha gustado este módulo, puede que desee recompensar mi trabajo enviándome una tarjeta regalo de Amazon.es a %s :)
+ErrorCreatingImage=Ha ocurrido un error al intentar guardar el código QR

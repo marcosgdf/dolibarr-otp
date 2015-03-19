@@ -123,8 +123,13 @@ class modOtp extends DolibarrModules
 	 */
 	function init($options='')
 	{
-
 		if (!function_exists('mcrypt_encrypt')) {
+			global $langs;
+
+			$langs->load('otp@otp');
+
+			$this->error = $langs->trans('McryptNotActive');
+
 			return 0;
 		}
 

@@ -1,3 +1,4 @@
+McryptNotAvailable=Required MCrypt extension is not available in this server
 OTPLogin=OTP login
 OTPKey=OTP key
 OTPTroubleHash=Having trouble while reading the QR code? Type the following HASH in your device:
@@ -18,3 +19,4 @@ OTPAdminAuthor = Author
 OTPAdminAuthorBody=Module developed by Marcos García de La Fuente (%s) using the following libraries:
 OTPAdminSupport=In case of any problem, send an email to %s
 OTPGift=If you liked this module maybe you'd like to support my work by sending an Amazon.es gift card to %s :)
+ErrorCreatingImage=There was an error when trying to save the QR code.
