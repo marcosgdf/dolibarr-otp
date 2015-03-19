@@ -46,6 +46,10 @@ class ActionsOtp
 
 		$langs->load('otp@otp');
 
+		$regenerate_button = '<form method="post">
+			<input type="submit" value="'.$langs->trans('OTPRegenerate').'" class="button" name="regenerate_otp">
+		</form>';
+
 		if ($action == '') {
 
 			print '<tr><td>'.$langs->trans('OTPLogin').'</td><td colspan="2">';
@@ -103,6 +107,7 @@ class ActionsOtp
 						print '<img src="'.dol_buildpath('/otp/showdoc.php', 1).'?img='.$user->id.'"><br>'.$langs->trans('OTPTroubleHash').'<br />
 				<span style="font-family:monospace;font-size:20px">'.$base32Seed.'</span><br>'.$langs->trans('OTPKeyType');
 					} else {
+						print $regenerate_button;
 						setEventMessage('ErrorCreatingImage', 'errors');
 					}
 				}
@@ -110,13 +115,7 @@ class ActionsOtp
 			} else {
 
 				if ($user->admin || ($user->id == GETPOST('id', 'int'))) {
-
-					print '
-
-					<form method="post">
-
-						<input type="submit" value="'.$langs->trans('OTPRegenerate').'" class="button" name="regenerate_otp">
-				</form>';
+					print $regenerate_button;
 				}
 			}
 
