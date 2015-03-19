@@ -94,11 +94,17 @@ class ActionsOtp
 					$qrCode->setSize(96);
 					$qrCode->setPadding(5);
 
-					$qrCode->save(__DIR__.'/../tmp/'.$user->id.'.png');
+					$img_path = __DIR__.'/../tmp/'.$user->id.'.png';
 
-					print '<img src="'.dol_buildpath('/otp/showdoc.php', 1).'?img='.$user->id.'"><br>'.$langs->trans('OTPTroubleHash').'<br />
+					$qrCode->save($img_path);
+
+					//Qrcode library doesn't warn on image creation error
+					if (file_exists($img_path)) {
+						print '<img src="'.dol_buildpath('/otp/showdoc.php', 1).'?img='.$user->id.'"><br>'.$langs->trans('OTPTroubleHash').'<br />
 				<span style="font-family:monospace;font-size:20px">'.$base32Seed.'</span><br>'.$langs->trans('OTPKeyType');
-
+					} else {
+						setEventMessage('ErrorCreatingImage', 'errors');
+					}
 				}
 
 			} else {
