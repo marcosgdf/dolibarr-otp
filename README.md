@@ -12,8 +12,8 @@ Just copy the folder otp to your htdocs folder or your custom folder (if you hav
 * PHP 5.3
 
 ### Tested Dolibarr versions
-* 3.7
 * 3.8
+* 3.7
 * 3.6
 * 3.5
 * 3.4
