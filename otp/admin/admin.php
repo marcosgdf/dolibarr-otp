@@ -43,7 +43,7 @@ llxHeader('', $title);
 $otplangs->load('admin');
 
 $linkback='<a href="'.DOL_URL_ROOT.'/admin/modules.php">'.$otplangs->trans("BackToModuleList").'</a>';
-print_fiche_titre($title,$linkback,'setup');
+print_fiche_titre($title,$linkback);
 
 print '<br />';
 

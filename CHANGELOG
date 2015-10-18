@@ -1,3 +1,7 @@
+v1.0.2
+========================
+- Little changes to adapt user interface to 3.8 version style
+
 v1.0.1
 ========================
 - Fixed a problem where the module didn't load when requirements were not met

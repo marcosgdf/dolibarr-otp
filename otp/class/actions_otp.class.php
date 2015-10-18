@@ -29,15 +29,27 @@ class ActionsOtp
 	{
 		global $langs;
 
+		require_once DOL_DOCUMENT_ROOT.'/core/lib/admin.lib.php';
+		require_once DOL_DOCUMENT_ROOT.'/core/lib/functions2.lib.php';
+
 		$langs->load('otp@otp');
 
-		$this->results = array(
-			'options' => array(
-				'table' => '<tr>
+		if (versioncompare(versiondolibarrarray(), array('3','8','0')) >= 0) {
+			$this->results = array(
+				'options' => array(
+					'table' => '<tr>
+<td class="nowrap center valignmiddle"><input type="text" name="otp" class="flat" size="20" id="otp" tabindex="3" placeholder="'.$langs->trans('OTPCode').'"></td></tr>'
+				)
+			);
+		} else {
+			$this->results = array(
+				'options' => array(
+					'table' => '<tr>
 <td>
 <label for="otp"><strong>'.$langs->trans('OTPCode').'</strong></label></td><td><input type="text" name="otp" class="flat" size="15" id="otp" tabindex="3"></td></tr>'
-			)
-		);
+				)
+			);
+		}
 	}
 
 	public function formObjectOptions($parameters, &$object, &$action, HookManager $hookManager)
