@@ -1,6 +1,7 @@
 v1.0.3
 ========================
 - Fixed a problem that faced Google Authenticator app for iPhone when scanning generated QR codes
+- Fixed a problem when an user with admin rights tried to regenerate the QR code of another user
 - Updated libraries to the latest version
 
 v1.0.2

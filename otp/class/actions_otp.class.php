@@ -65,42 +65,39 @@ class ActionsOtp
 
 			print '<tr><td>'.$langs->trans('OTPLogin').'</td><td colspan="2">';
 
-			if (GETPOST('regenerate_otp')) {
+			if ($user->admin || ($user->id == $object->id)) {
 
-				if ($user->admin || ($user->id == GETPOST('id', 'int'))) {
+				if (GETPOST('regenerate_otp')) {
 
 					require_once __DIR__.'/../lib/otp.lib.php';
 
-					$otp_seed = OTPregenerateSeed($db, $user);
+					$otp_seed = OTPregenerateSeed($db, $object);
 
 					//iPhone's Google Authenticator app has problems with spaces
 					$strip_company_name = str_replace(' ', '', $mysoc->name);
 
 					$qrCode = new QrCode();
 					$qrCode->setText(
-						"otpauth://hotp/".$strip_company_name.":".$user->login."?secret=".$otp_seed."&issuer=".$strip_company_name
+						"otpauth://hotp/".$strip_company_name.":".$object->login."?secret=".$otp_seed."&issuer=".$strip_company_name
 					);
 					$qrCode->setSize(96);
 					$qrCode->setPadding(5);
 
-					$img_path = __DIR__.'/../tmp/'.$user->id.'.png';
+					$img_path = __DIR__.'/../tmp/'.$object->id.'.png';
 
 					$qrCode->save($img_path);
 
 					//Qrcode library doesn't warn on image creation error
 					if (file_exists($img_path)) {
-						print '<div style="text-align: center"><img src="'.dol_buildpath('/otp/showdoc.php', 1).'?img='.$user->id.'"></div>';
+						print '<div style="text-align: center"><img src="'.dol_buildpath('/otp/showdoc.php',
+								1).'?img='.$object->id.'"></div>';
 						print '<br>'.$langs->trans('OTPTroubleHash').'<br />
 				<span style="font-family:monospace;font-size:20px">'.$otp_seed.'</span><br>'.$langs->trans('OTPKeyType');
 					} else {
 						print $regenerate_button;
 						setEventMessage('ErrorCreatingImage', 'errors');
 					}
-				}
-
-			} else {
-
-				if ($user->admin || ($user->id == GETPOST('id', 'int'))) {
+				} else {
 					print $regenerate_button;
 				}
 			}
