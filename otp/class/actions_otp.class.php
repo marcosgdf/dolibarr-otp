@@ -20,7 +20,6 @@
 require __DIR__.'/../vendor/autoload.php';
 
 use Endroid\QrCode\QrCode;
-use Rych\OTP\Seed;
 
 class ActionsOtp
 {
@@ -70,42 +69,16 @@ class ActionsOtp
 
 				if ($user->admin || ($user->id == GETPOST('id', 'int'))) {
 
-					/**
-					 * Examples from http://es.php.net/mcrypt_encrypt
-					 */
+					require_once __DIR__.'/../lib/otp.lib.php';
 
-					// Generates a 20-byte (160-bit) secret key
-					$otpSeed = Seed::generate();
-					$base32Seed = $otpSeed->getValue(Seed::FORMAT_BASE32);
+					$otp_seed = OTPregenerateSeed($db, $user);
 
-					$key = pack('H*', $dolibarr_main_cookie_cryptkey);
-
-					# crear una aleatoria IV para utilizarla co condificación CBC
-					$iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC);
-					$iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
-
-					$ciphertext = mcrypt_encrypt(
-						MCRYPT_RIJNDAEL_256,
-						$key,
-						$base32Seed,
-						MCRYPT_MODE_CBC,
-						$iv
-					);
-
-					# anteponer la IV para que esté disponible para el descifrado
-					$ciphertext = $iv.$ciphertext;
-
-					# codificar el texto cifrado resultante para que pueda ser representado por un string
-					$ciphertext_base64 = base64_encode($ciphertext);
-
-					$sql = "UPDATE ".MAIN_DB_PREFIX."user SET otp_seed = '".$db->escape(
-							$ciphertext_base64
-						)."', otp_counter = 0 WHERE rowid = ".$user->id;
-					$db->query($sql);
+					//iPhone's Google Authenticator app has problems with spaces
+					$strip_company_name = str_replace(' ', '', $mysoc->name);
 
 					$qrCode = new QrCode();
 					$qrCode->setText(
-						"otpauth://hotp/".$mysoc->name.":".$user->login."?secret=".$base32Seed."&issuer=".$mysoc->name
+						"otpauth://hotp/".$strip_company_name.":".$user->login."?secret=".$otp_seed."&issuer=".$strip_company_name
 					);
 					$qrCode->setSize(96);
 					$qrCode->setPadding(5);
@@ -116,8 +89,9 @@ class ActionsOtp
 
 					//Qrcode library doesn't warn on image creation error
 					if (file_exists($img_path)) {
-						print '<img src="'.dol_buildpath('/otp/showdoc.php', 1).'?img='.$user->id.'"><br>'.$langs->trans('OTPTroubleHash').'<br />
-				<span style="font-family:monospace;font-size:20px">'.$base32Seed.'</span><br>'.$langs->trans('OTPKeyType');
+						print '<div style="text-align: center"><img src="'.dol_buildpath('/otp/showdoc.php', 1).'?img='.$user->id.'"></div>';
+						print '<br>'.$langs->trans('OTPTroubleHash').'<br />
+				<span style="font-family:monospace;font-size:20px">'.$otp_seed.'</span><br>'.$langs->trans('OTPKeyType');
 					} else {
 						print $regenerate_button;
 						setEventMessage('ErrorCreatingImage', 'errors');
