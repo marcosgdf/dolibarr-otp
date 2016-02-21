@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright (C) 2014 Marcos García de La Fuente <hola@marcosgdf.com>
+ * Copyright (C) 2014-2016 Marcos García de La Fuente <hola@marcosgdf.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
