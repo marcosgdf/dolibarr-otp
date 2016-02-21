@@ -1,3 +1,8 @@
+v1.0.3
+========================
+- Fixed a problem that faced Google Authenticator app for iPhone when scanning generated QR codes
+- Updated libraries to the latest version
+
 v1.0.2
 ========================
 - Little changes to adapt user interface to 3.8 version style

@@ -9,26 +9,21 @@
     "packages": [
         {
             "name": "endroid/qrcode",
-            "version": "1.5.4",
+            "version": "1.5.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/endroid/QrCode.git",
-                "reference": "89dbd7418715f48056da2948fba00f728b56afc3"
+                "reference": "7b32cc5e4bd2f5e5191382926b18001b7cd78695"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/endroid/QrCode/zipball/89dbd7418715f48056da2948fba00f728b56afc3",
-                "reference": "89dbd7418715f48056da2948fba00f728b56afc3",
+                "url": "https://api.github.com/repos/endroid/QrCode/zipball/7b32cc5e4bd2f5e5191382926b18001b7cd78695",
+                "reference": "7b32cc5e4bd2f5e5191382926b18001b7cd78695",
                 "shasum": ""
             },
             "require": {
                 "ext-gd": "*",
                 "php": ">=5.3.0"
-            },
-            "require-dev": {
-                "fabpot/php-cs-fixer": "~1.0",
-                "phpunit/phpunit": "~4.0",
-                "symfony/var-dumper": "~2.3"
             },
             "type": "library",
             "extra": {
@@ -38,10 +33,7 @@
             },
             "autoload": {
                 "psr-4": {
-                    "Endroid\\QrCode\\": [
-                        "src/",
-                        "tests/"
-                    ]
+                    "Endroid\\QrCode\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -63,7 +55,7 @@
                 "qr",
                 "qrcode"
             ],
-            "time": "2015-07-04 19:44:13"
+            "time": "2016-01-01 19:08:49"
         },
         {
             "name": "rych/otp",
