@@ -124,11 +124,9 @@ class modOtp extends DolibarrModules
 			return 0;
 		}
 
-		$sql = array();
+		$this->_load_tables('/otp/sql/');
 
-		$result = $this->_load_tables('/otp/sql/');
-
-		return $this->_init($sql, $options);
+		return $this->_init(array(), $options);
 	}
 
 	/**
@@ -147,5 +145,3 @@ class modOtp extends DolibarrModules
 	}
 
 }
-
-?>

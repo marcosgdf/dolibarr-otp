@@ -23,8 +23,16 @@ use Endroid\QrCode\QrCode;
 
 class ActionsOtp
 {
+	/**
+	 * Data returned by the hook
+	 * @var string
+	 */
+	public $results;
 
-	public function getLoginPageOptions($parameters, &$object, &$action, HookManager $hookManager)
+	/**
+	 * Edits the login form to allow entering OTP
+	 */
+	public function getLoginPageOptions()
 	{
 		global $langs;
 
@@ -33,27 +41,30 @@ class ActionsOtp
 
 		$langs->load('otp@otp');
 
-		if (versioncompare(versiondolibarrarray(), array('3','8','0')) >= 0) {
-			$this->results = array(
-				'options' => array(
-					'table' => '<tr>
-<td class="nowrap center valignmiddle"><input type="text" name="otp" class="flat" size="20" id="otp" tabindex="3" placeholder="'.$langs->trans('OTPCode').'"></td></tr>'
-				)
-			);
-		} else {
-			$this->results = array(
-				'options' => array(
-					'table' => '<tr>
+		$this->results = array(
+			'options' => array(
+				'table' => '<tr>
 <td>
 <label for="otp"><strong>'.$langs->trans('OTPCode').'</strong></label></td><td><input type="text" name="otp" class="flat" size="15" id="otp" tabindex="3"></td></tr>'
-				)
-			);
+			)
+		);
+
+		if (versioncompare(versiondolibarrarray(), array('3','8','0')) >= 0) {
+			$this->results['options']['table'] = '<tr>
+<td class="nowrap center valignmiddle"><input type="text" name="otp" class="flat" size="20" id="otp" tabindex="3" placeholder="'.$langs->trans('OTPCode').'"></td></tr>';
 		}
 	}
 
-	public function formObjectOptions($parameters, &$object, &$action, HookManager $hookManager)
+	/**
+	 * Edits the user page to allow regenerating an OTP
+	 *
+	 * @param array $parameters Parameters given to the hook
+	 * @param User $object User of the page
+	 * @param string $action Action of the page
+	 */
+	public function formObjectOptions($parameters, $object, &$action)
 	{
-		global $db, $user, $langs, $mysoc, $dolibarr_main_cookie_cryptkey;
+		global $db, $user, $langs, $mysoc;
 
 		$langs->load('otp@otp');
 
@@ -85,18 +96,20 @@ class ActionsOtp
 
 					$img_path = __DIR__.'/../tmp/'.$object->id.'.png';
 
-					$qrCode->save($img_path);
-
-					//Qrcode library doesn't warn on image creation error
-					if (file_exists($img_path)) {
-						print '<div style="text-align: center"><img src="'.dol_buildpath('/otp/showdoc.php',
-								1).'?img='.$object->id.'"></div>';
-						print '<br>'.$langs->trans('OTPTroubleHash').'<br />
-				<span style="font-family:monospace;font-size:20px">'.$otp_seed.'</span><br>'.$langs->trans('OTPKeyType');
-					} else {
+					try {
+						$qrCode->save($img_path);
+					} catch (\Endroid\QrCode\Exceptions\ImageFunctionUnknownException $e) {
+						print $regenerate_button;
+						setEventMessage('ErrorCreatingImage', 'errors');
+					} catch (\Endroid\QrCode\Exceptions\ImageFunctionFailedException $e) {
 						print $regenerate_button;
 						setEventMessage('ErrorCreatingImage', 'errors');
 					}
+
+					print '<div style="text-align: center"><img src="'.dol_buildpath('/otp/showdoc.php',
+							1).'?img='.$object->id.'"></div>';
+					print '<br>'.$langs->trans('OTPTroubleHash').'<br />
+			<span style="font-family:monospace;font-size:20px">'.$otp_seed.'</span><br>'.$langs->trans('OTPKeyType');
 				} else {
 					print $regenerate_button;
 				}

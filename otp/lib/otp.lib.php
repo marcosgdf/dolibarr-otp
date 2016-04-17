@@ -38,13 +38,17 @@
 
 use Rych\OTP\Seed;
 
+/**
+ * Regenerates an user seed
+ * Examples from http://es.php.net/mcrypt_encrypt
+ *
+ * @param DoliDB $db Database handler
+ * @param User $user User holding the seed
+ * @return bool|string
+ */
 function OTPregenerateSeed(DoliDB $db, User $user)
 {
 	global $dolibarr_main_cookie_cryptkey;
-
-	/**
-	 * Examples from http://es.php.net/mcrypt_encrypt
-	 */
 
 	// Generates a 20-byte (160-bit) secret key
 	$otpSeed = Seed::generate();
@@ -79,4 +83,29 @@ function OTPregenerateSeed(DoliDB $db, User $user)
 	}
 
 	return $base32Seed;
+}
+
+/**
+ * Decrypts seed in the database
+ * Examples from http://es.php.net/mcrypt_encrypt
+ * 
+ * @param string $seed Given seed
+ * @param string $cryptkey Cryptkey
+ * @return string
+ */
+function OTPDecryptSeed($seed, $cryptkey)
+{
+	$ciphertext_dec = base64_decode($seed);
+	$key = pack('H*', $cryptkey);
+
+	//Recupera la IV, iv_size debería crearse usando mcrypt_get_iv_size()
+	$iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC);
+	$iv_dec = substr($ciphertext_dec, 0, $iv_size);
+
+	//Recupera el texto cifrado (todo excepto el $iv_size en el frente)
+	$ciphertext_dec = substr($ciphertext_dec, $iv_size);
+
+	//Podrían eliminarse los caracteres con valor 00h del final del texto puro
+	return mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $key,
+		$ciphertext_dec, MCRYPT_MODE_CBC, $iv_dec);
 }
