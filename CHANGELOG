@@ -1,3 +1,8 @@
+v1.0.4
+========================
+- Fixed a problem with PostgreSQL databases
+- Updated libraries to the latest version
+
 v1.0.3
 ========================
 - Fixed a problem that faced Google Authenticator app for iPhone when scanning generated QR codes
