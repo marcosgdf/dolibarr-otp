@@ -75,6 +75,8 @@ function check_user_password_otp($usertotest, $passwordtotest, $entitytotest)
 		return '';
 	}
 
+	require_once __DIR__.'/../../lib/otp.lib.php';
+
 	$otplib = new \Rych\OTP\HOTP(
 		OTPDecryptSeed($obj->otp_seed, $dolibarr_main_cookie_cryptkey)
 	);

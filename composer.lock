@@ -9,16 +9,16 @@
     "packages": [
         {
             "name": "endroid/qrcode",
-            "version": "1.6.4",
+            "version": "1.6.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/endroid/QrCode.git",
-                "reference": "76ea6d7f5e545732094d5baf94de8aceae32c12c"
+                "reference": "d1561118846d92f1c8e107a52c09512d764cbeaf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/endroid/QrCode/zipball/76ea6d7f5e545732094d5baf94de8aceae32c12c",
-                "reference": "76ea6d7f5e545732094d5baf94de8aceae32c12c",
+                "url": "https://api.github.com/repos/endroid/QrCode/zipball/d1561118846d92f1c8e107a52c09512d764cbeaf",
+                "reference": "d1561118846d92f1c8e107a52c09512d764cbeaf",
                 "shasum": ""
             },
             "require": {
@@ -55,7 +55,7 @@
                 "qr",
                 "qrcode"
             ],
-            "time": "2016-04-08 21:44:39"
+            "time": "2016-04-16 22:09:48"
         },
         {
             "name": "rych/otp",

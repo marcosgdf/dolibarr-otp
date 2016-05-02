@@ -1,3 +1,8 @@
+v1.0.5
+========================
+- Fixed a problem when logging in
+- Updated libraries to the latest version
+
 v1.0.4
 ========================
 - Fixed a problem with PostgreSQL databases
