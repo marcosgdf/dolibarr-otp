@@ -75,20 +75,25 @@ function check_user_password_otp($usertotest, $passwordtotest, $entitytotest)
 		return '';
 	}
 
-	require_once __DIR__.'/../../lib/otp.lib.php';
+	require_once __DIR__.'/../../lib/OTPUserSeed.php';
 
-	$methods = array('old', 'new');
+	$otpuserseed = new OTPUserSeed();
+
+	$methods = array(
+		OTPUserSeed::METHOD_OLD,
+		OTPUserSeed::METHOD_NEW
+	);
 
 	foreach ($methods as $cryptmethod) {
 
-		$decryptedSeed = OTPDecryptSeed($obj->otp_seed, OTPRetrieveCryptKey($cryptmethod));
+		$decryptedSeed = $otpuserseed->decrypt($obj->otp_seed, $cryptmethod);
 
 		$otplib = new \Rych\OTP\HOTP($decryptedSeed);
 
 		if ($otplib->validate($providedOTP, $obj->otp_counter)) {
 
-			if ($cryptmethod == 'old') {
-				OTPStoreSeed($db, $obj->rowid, OTPEncryptSeed($decryptedSeed, OTPRetrieveCryptKey()));
+			if ($cryptmethod == OTPUserSeed::METHOD_OLD) {
+				$otpuserseed->store($db, $obj->rowid, $decryptedSeed);
 			}
 
 			$obj->otp_counter++;

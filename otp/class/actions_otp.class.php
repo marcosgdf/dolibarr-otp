@@ -76,11 +76,18 @@ class ActionsOtp
 
 		$allow_regenerate = $user->admin || ($user->id == $object->id);
 
+		$vars = array(
+			'allowed' => $allow_regenerate,
+			'langs' => $langs
+		);
+
 		if ($action == '' && $allow_regenerate && GETPOST('regenerate_otp')) {
 
-			require_once __DIR__.'/../lib/otp.lib.php';
+			require_once __DIR__.'/../lib/OTPUserSeed.php';
 
-			$otp_seed = OTPregenerateSeed($db, $object);
+			$otpuserseed = new OTPUserSeed();
+
+			$otp_seed = $otpuserseed->generate($db, $object);
 
 			//iPhone's Google Authenticator app has problems with spaces
 			$strip_company_name = str_replace(' ', '', $mysoc->name);
@@ -105,9 +112,7 @@ class ActionsOtp
 			}
 		}
 
-		print OTPrenderTemplate('user_card', array(
-			'allowed' => $allow_regenerate
-		));
+		print OTPrenderTemplate('user_card', $vars);
 	}
 
 }
