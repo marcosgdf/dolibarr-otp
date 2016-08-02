@@ -170,3 +170,12 @@ function OTPDecryptSeed($seed, $cryptkey)
 	return mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $cryptkey,
 		$ciphertext_dec, MCRYPT_MODE_CBC, $iv_dec);
 }
+
+function OTPrenderTemplate($file, array $vars = array())
+{
+	extract($vars, EXTR_PREFIX_ALL, 'tpl');
+
+	ob_start();
+	include __DIR__.'/../tpl/'.$file.'.php';
+	return ob_get_clean();
+}

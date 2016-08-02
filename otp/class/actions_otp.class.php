@@ -36,23 +36,27 @@ class ActionsOtp
 	{
 		global $langs;
 
+		require_once __DIR__.'/../lib/otp.lib.php';
 		require_once DOL_DOCUMENT_ROOT.'/core/lib/admin.lib.php';
 		require_once DOL_DOCUMENT_ROOT.'/core/lib/functions2.lib.php';
 
 		$langs->load('otp@otp');
 
-		$this->results = array(
-			'options' => array(
-				'table' => '<tr>
-<td>
-<label for="otp"><strong>'.$langs->trans('OTPCode').'</strong></label></td><td><input type="text" name="otp" class="flat" size="15" id="otp" tabindex="3"></td></tr>'
-			)
+		$vars = array(
+			'label' => $langs->trans('OTPCode')
 		);
 
 		if (versioncompare(versiondolibarrarray(), array('3','8','0')) >= 0) {
-			$this->results['options']['table'] = '<tr>
-<td class="nowrap center valignmiddle"><input type="text" name="otp" class="flat" size="20" id="otp" tabindex="3" placeholder="'.$langs->trans('OTPCode').'"></td></tr>';
+			$tpl = OTPrenderTemplate('login_3.8.0', $vars);
+		} else {
+			$tpl = OTPrenderTemplate('login_older', $vars);
 		}
+
+		$this->results = array(
+			'options' => array(
+				'table' => $tpl
+			)
+		);
 	}
 
 	/**
@@ -66,58 +70,44 @@ class ActionsOtp
 	{
 		global $db, $user, $langs, $mysoc;
 
+		require __DIR__.'/../lib/otp.lib.php';
+
 		$langs->load('otp@otp');
 
-		$regenerate_button = '<form method="post">
-			<input type="submit" value="'.$langs->trans('OTPRegenerate').'" class="button" name="regenerate_otp">
-		</form>';
+		$allow_regenerate = $user->admin || ($user->id == $object->id);
 
-		if ($action == '') {
+		if ($action == '' && $allow_regenerate && GETPOST('regenerate_otp')) {
 
-			print '<tr><td>'.$langs->trans('OTPLogin').'</td><td colspan="2">';
+			require_once __DIR__.'/../lib/otp.lib.php';
 
-			if ($user->admin || ($user->id == $object->id)) {
+			$otp_seed = OTPregenerateSeed($db, $object);
 
-				if (GETPOST('regenerate_otp')) {
+			//iPhone's Google Authenticator app has problems with spaces
+			$strip_company_name = str_replace(' ', '', $mysoc->name);
 
-					require_once __DIR__.'/../lib/otp.lib.php';
+			$qrCode = new QrCode();
+			$qrCode->setText(
+				"otpauth://hotp/".$strip_company_name.":".$object->login."?secret=".$otp_seed."&issuer=".$strip_company_name
+			);
+			$qrCode->setSize(128);
+			$qrCode->setPadding(5);
 
-					$otp_seed = OTPregenerateSeed($db, $object);
+			$img_path = __DIR__.'/../tmp/'.$object->id.'.png';
 
-					//iPhone's Google Authenticator app has problems with spaces
-					$strip_company_name = str_replace(' ', '', $mysoc->name);
-
-					$qrCode = new QrCode();
-					$qrCode->setText(
-						"otpauth://hotp/".$strip_company_name.":".$object->login."?secret=".$otp_seed."&issuer=".$strip_company_name
-					);
-					$qrCode->setSize(96);
-					$qrCode->setPadding(5);
-
-					$img_path = __DIR__.'/../tmp/'.$object->id.'.png';
-
-					try {
-						$qrCode->save($img_path);
-					} catch (\Endroid\QrCode\Exceptions\ImageFunctionUnknownException $e) {
-						print $regenerate_button;
-						setEventMessage('ErrorCreatingImage', 'errors');
-					} catch (\Endroid\QrCode\Exceptions\ImageFunctionFailedException $e) {
-						print $regenerate_button;
-						setEventMessage('ErrorCreatingImage', 'errors');
-					}
-
-					print '<div style="text-align: center"><img src="'.dol_buildpath('/otp/showdoc.php',
-							1).'?img='.$object->id.'"></div>';
-					print '<br>'.$langs->trans('OTPTroubleHash').'<br />
-			<span style="font-family:monospace;font-size:20px">'.$otp_seed.'</span><br>'.$langs->trans('OTPKeyType');
-				} else {
-					print $regenerate_button;
-				}
+			try {
+				$qrCode->save($img_path);
+				$vars['qr'] = dol_buildpath('/otp/showdoc.php', 1).'?img='.$object->id;
+				$vars['seed'] = $otp_seed;
+			} catch (\Endroid\QrCode\Exceptions\ImageFunctionUnknownException $e) {
+				setEventMessage('ErrorCreatingImage', 'errors');
+			} catch (\Endroid\QrCode\Exceptions\ImageFunctionFailedException $e) {
+				setEventMessage('ErrorCreatingImage', 'errors');
 			}
-
-			print '</td></tr>';
 		}
 
+		print OTPrenderTemplate('user_card', array(
+			'allowed' => $allow_regenerate
+		));
 	}
 
 }
