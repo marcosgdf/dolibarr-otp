@@ -1,3 +1,11 @@
+v1.0.6
+========================
+- Fixed minor text issues
+- Improved security. Now the crypto key is stored in the filesystem
+- Fixed PHP errors that happened under some circumstances when regenerating an OTP key
+- Increased the size of the QR code
+- Updated libraries to the latest version
+
 v1.0.5
 ========================
 - Fixed a problem when logging in
