@@ -1,6 +1,6 @@
 McryptNotAvailable=Required MCrypt extension is not available in this server
 OTPLogin=OTP login
-OTPKey=OTP key
+OTPCode=OTP code
 OTPTroubleHash=Having trouble while reading the QR code? Type the following HASH in your device:
 OTPKeyType=Key type: based in counter.
 OTPRegenerate=Regenerate OTP key
