@@ -30,7 +30,7 @@ require __DIR__.'/../../vendor/autoload.php';
  */
 function check_user_password_otp($usertotest, $passwordtotest, $entitytotest)
 {
-	global $db, $conf, $dolibarr_main_cookie_cryptkey;
+	global $db, $conf, $user;
 
 	dol_include_once('/core/login/functions_dolibarr.php');
 
@@ -77,19 +77,29 @@ function check_user_password_otp($usertotest, $passwordtotest, $entitytotest)
 
 	require_once __DIR__.'/../../lib/otp.lib.php';
 
-	$otplib = new \Rych\OTP\HOTP(
-		OTPDecryptSeed($obj->otp_seed, $dolibarr_main_cookie_cryptkey)
-	);
+	$methods = array('old', 'new');
 
-	if (!$otplib->validate($providedOTP, $obj->otp_counter)) {
-		return '';
+	foreach ($methods as $cryptmethod) {
+
+		$decryptedSeed = OTPDecryptSeed($obj->otp_seed, OTPRetrieveCryptKey($cryptmethod));
+
+		$otplib = new \Rych\OTP\HOTP($decryptedSeed);
+
+		if ($otplib->validate($providedOTP, $obj->otp_counter)) {
+
+			if ($cryptmethod == 'old') {
+				OTPStoreSeed($db, $obj->rowid, OTPEncryptSeed($decryptedSeed, OTPRetrieveCryptKey()));
+			}
+
+			$obj->otp_counter++;
+
+			$sql = "UPDATE ".MAIN_DB_PREFIX."user SET otp_counter = '".$obj->otp_counter."' WHERE rowid = ".$obj->rowid;
+			$db->query($sql);
+
+			// Now the user is authenticated
+			return $usertotest;
+		}
 	}
 
-	$obj->otp_counter++;
-
-	$sql = "UPDATE ".MAIN_DB_PREFIX."user SET otp_counter = '".$obj->otp_counter."' WHERE rowid = ".$obj->rowid;
-	$db->query($sql);
-
-	// Now the user is authenticated
-	return $usertotest;
+	return '';
 }
